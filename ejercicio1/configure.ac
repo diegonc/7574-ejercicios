@@ -15,8 +15,10 @@ AC_CONFIG_HEADERS([src/config.h])
 : ${CXXFLAGS:="-g -O0"}
 AC_PROG_CXX
 AC_PROG_CC
+PKG_PROG_PKG_CONFIG
 
 # Check for pkg-config compatible modules.
+PKG_CHECK_MODULES([YAMLCPP], [yaml-cpp >= 0.5.1])
 
 # Checks for libraries.
 
