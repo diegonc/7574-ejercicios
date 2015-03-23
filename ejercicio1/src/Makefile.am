@@ -7,6 +7,7 @@ libSources = \
 	lib/system/IPCName.h \
 	lib/system/Semaphore.cc \
 	lib/system/Semaphore.h \
+	lib/system/SharedVariable.h \
 	lib/system/System.cc \
 	lib/system/System.h \
 	lib/utils/NonCopyable.h
