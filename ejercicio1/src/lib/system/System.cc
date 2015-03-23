@@ -36,7 +36,7 @@ pid_t System::spawn (const char *file, char* const argv[])
 		// exitosamente el descriptor se cierre.
 		// Esto provoca que en el padre read devuelva 0-
 		fcntl (fds[1], F_SETFD, fcntl (fds[1], F_GETFD) | FD_CLOEXEC);
-		int err = execvp (file, argv);
+		execvp (file, argv);
 
 		// Si llega hasta acá es que hubo error en exec
 		// Primero logeamos el error 
