@@ -4,6 +4,8 @@ AM_CXXFLAGS = -O0 -g -Wall -Wextra -Wconversion
 AM_CPPFLAGS = -I$(srcdir)/lib
 
 libSources = \
+	lib/system/Semaphore.cc \
+	lib/system/Semaphore.h \
 	lib/system/System.cc \
 	lib/system/System.h \
 	lib/utils/NonCopyable.h
