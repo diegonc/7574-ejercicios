@@ -1,7 +1,15 @@
 Makefile.in
+Makefile
 aclocal.m4
 autom4te.cache
 build-aux
 configure
 config.h.in
+config.h
+config.log
+config.status
+.dirstamp
+.deps
+stamp-h1
 *~
+*.o
