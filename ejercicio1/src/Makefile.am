@@ -4,6 +4,7 @@ AM_CXXFLAGS = -O0 -g -Wall -Wextra -Wconversion
 AM_CPPFLAGS = -I$(srcdir)/lib
 
 libSources = \
+	lib/museo/Museo.h \
 	lib/system/IPCName.h \
 	lib/system/Semaphore.cc \
 	lib/system/Semaphore.h \
