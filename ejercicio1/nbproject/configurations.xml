@@ -4,15 +4,13 @@
     <df root="." name="0">
       <df name="src">
         <df name="lib">
-          <df name="museo">
-            <in>Museo.h</in>
-          </df>
           <df name="system">
             <in>Semaphore.cc</in>
             <in>System.cc</in>
           </df>
         </df>
         <df name="puerta">
+          <in>ArgParser.cc</in>
           <in>puerta.cc</in>
         </df>
       </df>
@@ -57,13 +55,13 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="src/lib/museo/Museo.h" ex="false" tool="3" flavor2="0">
+      <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/lib/system/System.cc" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/lib/system/System.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/puerta/ArgParser.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/puerta/puerta.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/puerta/puerta.cc" ex="false" tool="1" flavor2="4">
       </item>
     </conf>
   </confs>

@@ -14,6 +14,8 @@ libSources = \
 	lib/utils/NonCopyable.h
 
 puertaSources = \
+	puerta/ArgParser.cc \
+	puerta/ArgParser.h \
 	puerta/puerta.cc
 
 bin_PROGRAMS = \
