@@ -3,9 +3,19 @@
 
 struct Museo
 {
-	bool abierto;
-	int personas;
-	int capacidad;
+	bool _abierto;
+	int _personas;
+	int _capacidad;
+
+	bool abierto () const { return _abierto; }
+	void abierto (bool a) { _abierto = a; }
+
+	int personas () const { return _personas; }
+	void agregar () { _personas++; }
+	void sacar () { _personas--; }
+
+	int capacidad () const { return _capacidad; }
+	void capacidad (int c) { _capacidad = c; }
 };
 
 #endif	/* MUSEO_H */
