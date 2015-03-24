@@ -86,6 +86,7 @@ Logger& Logger::endl (Logger& logger)
 	if (logger.nivelMensaje <= logger.nivelLogger) {
 		logger.buffer << std::endl;
 
+		int err = errno;
 		std::string line = logger.buffer.str();
 		const char* data = line.c_str ();
 		size_t remaining = line.size ();
@@ -103,6 +104,8 @@ Logger& Logger::endl (Logger& logger)
 				remaining -= written;
 			} while (remaining > 0);
 		}
+		
+		errno = err;
 	}
 
 	logger.reset ();
