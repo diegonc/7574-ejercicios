@@ -5,6 +5,7 @@
 #include <logging/LoggerRegistry.h>
 #include <museo/constantes.h>
 #include <museo/Museo.h>
+#include <sstream>
 #include <system/IPCName.h>
 #include <system/Semaphore.h>
 #include <system/SharedVariable.h>
@@ -14,8 +15,11 @@ int main (int argc, char** argv)
 	ArgParser& args = ArgParser::getInstance ();
 	args.parse (argc, argv);
 
+	std::ostringstream oss;
+	oss << "puerta " << args.id ();
+
 	LoggerRegistry& registry = LoggerRegistry::getInstance ();
-	registry.application ("puerta");
+	registry.application (oss.str ());
 	registry.filename ("ejercicio1.log");
 	registry.quiet (!args.debug ());
 

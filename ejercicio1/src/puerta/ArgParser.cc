@@ -1,5 +1,7 @@
 #include <argp.h>
 #include <cstdlib>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <ArgParser.h>
 
@@ -12,6 +14,16 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 		case 'd':
 			argParser->_debug = true;
 			break;
+		case 'i':
+		{
+			unsigned long id = strtoul(arg, NULL, 10);
+			if (id == 0) {
+				argp_failure (state, 1, 0, "the ID_PUERTA option value must be a number greater than 0");
+			} else {
+				argParser->_id = static_cast<int> (id);
+			}
+			break;
+		}
 		case ARGP_KEY_END:
 			if (state->arg_num > 0) {
 				argp_failure (state, 1, 0, "too many arguments");
@@ -23,12 +35,13 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 
 static struct argp_option options[] = {
 	{"debug", 'd', 0, 0, "Enable debug mode", 0},
+	{"id", 'i', "ID_PUERTA", 0, "Give an id to this door", 0},
 	{0, 0, 0, 0, 0, 0}
 };
 
 static struct argp optionParser = {options, parserFunc, 0, 0, 0, 0, 0};
 
-ArgParser::ArgParser () : _debug (false)
+ArgParser::ArgParser () : _debug (false), _id (getpid ())
 {
 }
 

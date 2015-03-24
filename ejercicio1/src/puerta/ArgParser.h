@@ -6,20 +6,22 @@
 
 class ArgParser : private NonCopyable
 {
-    private:
-            bool _debug;
+	private:
+		bool _debug;
+		int _id;
 
-            ArgParser();
-            ~ArgParser();
+		ArgParser();
+		~ArgParser();
 
-            friend int parserFunc (int key, char *arg, struct argp_state *state);
+		friend int parserFunc (int key, char *arg, struct argp_state *state);
 
-    public:
-            static ArgParser& getInstance();
+	public:
+		static ArgParser& getInstance();
 
-            void parse (int argc, char **argv);
+		void parse (int argc, char **argv);
 
-            bool debug () const { return _debug; }
+		bool debug () const { return _debug; }
+		int id () const { return _id; }
 };
 
 #endif
