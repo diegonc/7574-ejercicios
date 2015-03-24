@@ -5,7 +5,7 @@
 
 int parserFunc (int key, char *arg, struct argp_state *state)
 {
-    (void) arg;
+	(void) arg;
 
 	ArgParser* argParser = static_cast<ArgParser*> (state->input);
 	switch (key) {
@@ -22,27 +22,27 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 }
 
 static struct argp_option options[] = {
-	{ "debug", 'd', 0, 0, "Enable debug mode", 0},
-	{ 0, 0, 0, 0, 0, 0 }
+	{"debug", 'd', 0, 0, "Enable debug mode", 0},
+	{0, 0, 0, 0, 0, 0}
 };
 
-static struct argp optionParser = { options, parserFunc, 0, 0, 0, 0, 0 };
+static struct argp optionParser = {options, parserFunc, 0, 0, 0, 0, 0};
 
-ArgParser::ArgParser () : _debug(false)
+ArgParser::ArgParser () : _debug (false)
 {
 }
 
-ArgParser::~ArgParser()
+ArgParser::~ArgParser ()
 {
 }
 
-ArgParser& ArgParser::getInstance()
+ArgParser& ArgParser::getInstance ()
 {
 	static ArgParser parser;
 	return parser;
 }
 
-void ArgParser::parse(int argc, char** argv)
+void ArgParser::parse (int argc, char** argv)
 {
 	argp_parse (&optionParser, argc, argv, 0, 0, this);
 }

@@ -3,9 +3,9 @@
 
 struct Museo
 {
-    bool abierto;
-    int personas;
-    int capacidad;
+	bool abierto;
+	int personas;
+	int capacidad;
 };
 
 #endif	/* MUSEO_H */

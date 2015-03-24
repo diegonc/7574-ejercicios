@@ -8,14 +8,14 @@
 
 enum LevelId
 {
-    LEVEL_ERROR = 0,
-    LEVEL_WARN  = 1,
-    LEVEL_INFO  = 2,
-    LEVEL_DEBUG = 3,
-    LEVEL_TRACE = 4,
+	LEVEL_ERROR = 0,
+	LEVEL_WARN  = 1,
+	LEVEL_INFO  = 2,
+	LEVEL_DEBUG = 3,
+	LEVEL_TRACE = 4,
 
-    LEVEL_UNSET = 9,
-    LEVEL_DEFLT = LEVEL_INFO
+	LEVEL_UNSET = 9,
+	LEVEL_DEFLT = LEVEL_INFO
 };
 
 const char* level_name(LevelId level);
@@ -84,12 +84,12 @@ class Logger : private NonCopyable
 
 class Level
 {
-    public:
-        static Logger& TRACE (Logger& logger);
-        static Logger& DEBUG (Logger& logger);
-        static Logger& INFO  (Logger& logger);
-        static Logger& WARN  (Logger& logger);
-        static Logger& ERROR (Logger& logger);
+	public:
+		static Logger& TRACE (Logger& logger);
+		static Logger& DEBUG (Logger& logger);
+		static Logger& INFO  (Logger& logger);
+		static Logger& WARN  (Logger& logger);
+		static Logger& ERROR (Logger& logger);
 };
 
 template<typename T>
