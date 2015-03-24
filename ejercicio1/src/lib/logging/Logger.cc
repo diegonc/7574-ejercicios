@@ -25,7 +25,9 @@ Logger::Logger (const std::string& filename, const std::string& module)
 	, filename (filename)
 	, module (module)
 	, _quiet (true)
+	, nivelLogger (LEVEL_TRACE)
 	, printedModule(false)
+	, nivelMensaje (LEVEL_UNSET)
 {
 }
 
@@ -34,7 +36,9 @@ Logger::Logger (const std::string& filename, const std::string& module, bool qui
 	, filename (filename)
 	, module (module)
 	, _quiet (quiet)
+	, nivelLogger (LEVEL_TRACE)
 	, printedModule(false)
+	, nivelMensaje (LEVEL_UNSET)
 {
 	if (!_quiet) {
 		open ();
@@ -79,29 +83,37 @@ void Logger::unlock () const
 
 Logger& Logger::endl (Logger& logger)
 {
-	logger.buffer << std::endl;
+    if (logger.nivelMensaje <= logger.nivelLogger) {
+        logger.buffer << std::endl;
 
-	std::string line = logger.buffer.str();
-	const char* data = line.c_str ();
-	size_t remaining = line.size ();
-	ssize_t written;
+        std::string line = logger.buffer.str();
+        const char* data = line.c_str ();
+        size_t remaining = line.size ();
+        ssize_t written;
 
-	if (logger.fd == -1) {
-		logger.open ();
-	}
+        if (logger.fd == -1) {
+            logger.open ();
+        }
 
-	{
-		Locker grabLock (logger);
-		do {
-			written = write (logger.fd, data, remaining);
-			System::check (written);
-			remaining -= written;
-		} while (remaining > 0);
-	}
+        {
+            Locker grabLock (logger);
+            do {
+                written = write (logger.fd, data, remaining);
+                System::check (written);
+                remaining -= written;
+            } while (remaining > 0);
+        }
+    }
 
-	logger.buffer.str ("");
-	logger.printedModule = false;
+	logger.reset ();
 	return logger;
+}
+
+void Logger::reset ()
+{
+    buffer.str ("");
+    printedModule = false;
+    nivelMensaje = LEVEL_UNSET;
 }
 
 Logger& operator<< (Logger& logger, Logger& (*pf)(Logger&))
@@ -111,4 +123,79 @@ Logger& operator<< (Logger& logger, Logger& (*pf)(Logger&))
 	}
 
 	return pf (logger);
+}
+
+const char* level_name(LevelId level)
+{
+    switch (level) {
+        case LEVEL_ERROR:
+            return "ERROR";
+        case LEVEL_WARN:
+            return "WARN ";
+        case LEVEL_INFO:
+            return "INFO ";
+        case LEVEL_DEBUG:
+            return "DEBUG";
+        case LEVEL_TRACE:
+            return "TRACE";
+        default:
+            std::ostringstream buffer ("Nivel inválido: ");
+            buffer << level;
+            throw std::logic_error (buffer.str ());
+    }
+}
+
+Logger& Level::TRACE (Logger& logger)
+{
+    if (logger.nivelMensaje != LEVEL_UNSET) {
+        logger.reset ();
+        throw std::logic_error ("El nivel debe estar en la primer posicion");
+    }
+
+    logger.nivelMensaje = LEVEL_TRACE;
+    return logger;
+}
+
+Logger& Level::DEBUG (Logger& logger)
+{
+    if (logger.nivelMensaje != LEVEL_UNSET) {
+        logger.reset ();
+        throw std::logic_error ("El nivel debe estar en la primer posicion");
+    }
+
+    logger.nivelMensaje = LEVEL_DEBUG;
+    return logger;
+}
+
+Logger& Level::INFO  (Logger& logger)
+{
+    if (logger.nivelMensaje != LEVEL_UNSET) {
+        logger.reset ();
+        throw std::logic_error ("El nivel debe estar en la primer posicion");
+    }
+
+    logger.nivelMensaje = LEVEL_INFO;
+    return logger;
+}
+
+Logger& Level::WARN  (Logger& logger)
+{
+    if (logger.nivelMensaje != LEVEL_UNSET) {
+        logger.reset ();
+        throw std::logic_error ("El nivel debe estar en la primer posicion");
+    }
+
+    logger.nivelMensaje = LEVEL_WARN;
+    return logger;
+}
+
+Logger& Level::ERROR (Logger& logger)
+{
+    if (logger.nivelMensaje != LEVEL_UNSET) {
+        logger.reset ();
+        throw std::logic_error ("El nivel debe estar en la primer posicion");
+    }
+
+    logger.nivelMensaje = LEVEL_ERROR;
+    return logger;
 }

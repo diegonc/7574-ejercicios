@@ -4,6 +4,10 @@
     <df root="." name="0">
       <df name="src">
         <df name="lib">
+          <df name="logging">
+            <in>Logger.cc</in>
+            <in>LoggerRegistry.cc</in>
+          </df>
           <df name="system">
             <in>Semaphore.cc</in>
             <in>System.cc</in>
@@ -55,13 +59,17 @@
           </ccTool>
         </makeTool>
       </makefileType>
-      <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="4">
+      <item path="src/lib/logging/Logger.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/lib/system/System.cc" ex="false" tool="1" flavor2="4">
+      <item path="src/lib/logging/LoggerRegistry.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/lib/system/System.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/puerta/ArgParser.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/puerta/puerta.cc" ex="false" tool="1" flavor2="4">
+      <item path="src/puerta/puerta.cc" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
