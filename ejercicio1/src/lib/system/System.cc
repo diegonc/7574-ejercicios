@@ -1,8 +1,7 @@
 #include <errno.h>
-//#include <estacion/constantes.h>
 #include <fcntl.h>
-//#include <logging/Logger.h>
-//#include <logging/LoggerRegistry.h>
+#include <logging/Logger.h>
+#include <logging/LoggerRegistry.h>
 #include <system/System.h>
 #include <unistd.h>
 
@@ -23,7 +22,8 @@ pid_t System::spawn (const char *file, char* const argv[])
 	// ver: http://davmac.wordpress.com/2008/11/25/forkexec-is-forked-up/
 	int fds[2];
 	pid_t pid;
-//	bool quiet = LoggerRegistry::getInstance ().quiet ();
+	bool quiet = LoggerRegistry::getInstance ().quiet ();
+	const char* filename = LoggerRegistry::getInstance ().filename ().c_str ();
 
 	if (pipe (fds) == -1) {
 		return -1;
@@ -36,18 +36,18 @@ pid_t System::spawn (const char *file, char* const argv[])
 		// exitosamente el descriptor se cierre.
 		// Esto provoca que en el padre read devuelva 0-
 		fcntl (fds[1], F_SETFD, fcntl (fds[1], F_GETFD) | FD_CLOEXEC);
-		execvp (file, argv);
+		int err = execvp (file, argv);
 
 		// Si llega hasta acá es que hubo error en exec
 		// Primero logeamos el error 
 		SystemErrorException e;
-//		LoggerRegistry& r = LoggerRegistry::getInstance ();
-//		r.filename (estacion::LOG_FILE);
-//		r.application ("spawned");
-//		r.quiet (quiet);
-//		Logger& logger = LoggerRegistry::getLogger ("System");
-//		logger << "Error ejecutando " << file << " : (" << err << ") "
-//		       << e.what () << Logger::endl;
+		LoggerRegistry& r = LoggerRegistry::getInstance ();
+		r.filename (filename);
+		r.application ("spawned");
+		r.quiet (quiet);
+		Logger& logger = LoggerRegistry::getLogger ("System");
+		logger << "Error ejecutando " << file << " : (" << err << ") "
+				<< e.what () << Logger::endl;
 
 		// Luego notificamos al padre el código de error a traves
 		// del pipe.

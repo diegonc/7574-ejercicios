@@ -1,7 +1,7 @@
 #include <errno.h>
 #include <iostream>
-//#include <logging/Logger.h>
-//#include <logging/LoggerRegistry.h>
+#include <logging/Logger.h>
+#include <logging/LoggerRegistry.h>
 #include <stdexcept>
 #include <sys/ipc.h>
 #include <sys/sem.h>
@@ -19,16 +19,16 @@ namespace {
 
 Semaphore::Semaphore (IPCName name, int nsems, int flags) : nsems (nsems)
 {
-//	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
-//	logger << "Creando semáforo ["
-//	       << name.path << "::" << name.index << "]" << Logger::endl;
+	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
+	logger << "Creando semáforo ["
+			<< name.path << "::" << name.index << "]" << Logger::endl;
 
 	key_t token = ftok (name.path, name.index);
-//	logger << "ftok devolvió " << token << Logger::endl;
+	logger << "ftok devolvió " << token << Logger::endl;
 	System::check (token);
 
 	id = semget (token, nsems, flags);
-//	logger << "semget devolvió " << id << Logger::endl;
+	logger << "semget devolvió " << id << Logger::endl;
 	System::check (id);
 
 	persistent = false;
@@ -36,11 +36,11 @@ Semaphore::Semaphore (IPCName name, int nsems, int flags) : nsems (nsems)
 
 Semaphore::Semaphore (key_t key, int nsems, int flags) : nsems (nsems)
 {
-//	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
-//	logger << "Creando semáforo con clave " << key << Logger::endl;
+	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
+	logger << "Creando semáforo con clave " << key << Logger::endl;
 
 	id = semget (key, nsems, flags);
-//	logger << "semget devolvió " << id << Logger::endl;
+	logger << "semget devolvió " << id << Logger::endl;
 	System::check (id);
 
 	persistent = false;
@@ -56,9 +56,9 @@ Semaphore::~Semaphore ()
 
 void Semaphore::initialize ()
 {
-//	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
-//	logger << "Inicializando el conjunto de semáforos con id "
-//               << id << " en 0" << Logger::endl;
+	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
+	logger << "Inicializando el conjunto de semáforos con id "
+			<< id << " en 0" << Logger::endl;
 
 	for (unsigned short i=0; i < nsems; i++)
 		set (i, 0);
@@ -71,10 +71,10 @@ void Semaphore::persist ()
 
 void Semaphore::set (unsigned short idx, short value)
 {
-//	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
-//	logger << "Seteando el semáforo " << id
-//	       << " indice " << idx
-//	       << " con el valor " << value << Logger::endl;
+	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
+	logger << "Seteando el semáforo " << id
+			<< " indice " << idx
+			<< " con el valor " << value << Logger::endl;
 
 	union semun arg;
 	arg.val = value;
@@ -83,10 +83,10 @@ void Semaphore::set (unsigned short idx, short value)
 
 int Semaphore::wait (unsigned short idx, short value)
 {
-//	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
-//	logger << "Esperando el semáforo " << id
-//	       << " indice " << idx
-//	       << " con el valor " << value << Logger::endl;
+	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
+	logger << "Esperando el semáforo " << id
+			<< " indice " << idx
+			<< " con el valor " << value << Logger::endl;
 
 	if (value < 0)
 		throw std::invalid_argument ("Semaphore::wait: value must be positive.");
@@ -114,10 +114,10 @@ int Semaphore::wait (unsigned short idx, short value)
 
 void Semaphore::signal (unsigned short idx, short value)
 {
-//	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
-//	logger << "Señalizando el semáforo " << id
-//	       << " indice " << idx
-//	       << " con el valor " << value << Logger::endl;
+	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
+	logger << "Señalizando el semáforo " << id
+			<< " indice " << idx
+			<< " con el valor " << value << Logger::endl;
 
 	if (value < 0)
 		throw std::invalid_argument ("Semaphore::signal: value must be positive.");
@@ -132,14 +132,12 @@ void Semaphore::signal (unsigned short idx, short value)
 
 void Semaphore::debug () const
 {
-#if 0
 	Logger& logger = LoggerRegistry::getLogger ("Semaphore");
 	for (int i=0; i < nsems; i++) {
 		int val = semctl (id, i, GETVAL);
 		logger << "Semaforo " << id
-		       << " indice " << i
-		       << " tiene el valor " << val
-		       << Logger::endl;
+				<< " indice " << i
+				<< " tiene el valor " << val
+				<< Logger::endl;
 	}
-#endif
 }
