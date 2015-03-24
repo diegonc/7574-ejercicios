@@ -11,8 +11,6 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CONFIG_HEADERS([src/config.h])
 
 # Checks for programs.
-# override default flags
-: ${CXXFLAGS:="-g -O0"}
 AC_PROG_CXX
 AC_PROG_CC
 PKG_PROG_PKG_CONFIG
