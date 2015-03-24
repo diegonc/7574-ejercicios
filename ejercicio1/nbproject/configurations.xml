@@ -8,6 +8,9 @@
             <in>Logger.cc</in>
             <in>LoggerRegistry.cc</in>
           </df>
+          <df name="museo">
+            <in>constantes.h</in>
+          </df>
           <df name="system">
             <in>Semaphore.cc</in>
             <in>System.cc</in>
@@ -62,6 +65,8 @@
       <item path="src/lib/logging/Logger.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/lib/logging/LoggerRegistry.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/lib/museo/constantes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="0">
       </item>

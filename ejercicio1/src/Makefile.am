@@ -8,6 +8,7 @@ libSources = \
 	lib/logging/Logger.h \
 	lib/logging/LoggerRegistry.cc \
 	lib/logging/LoggerRegistry.h \
+	lib/museo/constantes.h \
 	lib/museo/Museo.h \
 	lib/system/IPCName.h \
 	lib/system/Semaphore.cc \
