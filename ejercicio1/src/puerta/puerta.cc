@@ -22,9 +22,12 @@ int main (int argc, char** argv)
 	SharedVariable<Museo> svMuseo (
 			IPCName(constantes::PATH_NAME, constantes::AREA_MUSEO),
 			0666);
+	svMuseo.persist ();
+
 	Semaphore mutex(
 			IPCName(constantes::PATH_NAME, constantes::SEM_MUTEX),
 			1, 0666);
+	mutex.persist ();
 
 	srand (time (NULL));
 	Museo& museo = svMuseo.get ();
