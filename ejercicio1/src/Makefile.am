@@ -28,4 +28,5 @@ bin_PROGRAMS = \
 
 puerta_puerta_SOURCES = $(puertaSources) $(libSources)
 puerta_puerta_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/puerta
-#puerta_puerta_LDADD =
+puerta_puerta_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
+puerta_puerta_LDADD = $(YAMLCPP_LIBS)
