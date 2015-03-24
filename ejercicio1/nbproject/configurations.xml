@@ -3,13 +3,14 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="src">
+        <df name="lanzador">
+          <in>ArgParser.cc</in>
+          <in>lanzador.cc</in>
+        </df>
         <df name="lib">
           <df name="logging">
             <in>Logger.cc</in>
             <in>LoggerRegistry.cc</in>
-          </df>
-          <df name="museo">
-            <in>constantes.h</in>
           </df>
           <df name="system">
             <in>Semaphore.cc</in>
@@ -54,7 +55,6 @@
             <incDir>
               <pElem>src</pElem>
               <pElem>src/lib</pElem>
-              <pElem>src/puerta</pElem>
             </incDir>
             <preprocessorList>
               <Elem>HAVE_CONFIG_H</Elem>
@@ -62,19 +62,42 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <folder path="0/src/lanzador">
+        <ccTool>
+          <incDir>
+            <pElem>src/lanzador</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/src/lib">
+        <ccTool>
+          <incDir>
+            <pElem>src/lanzador</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/src/puerta">
+        <ccTool>
+          <incDir>
+            <pElem>src/puerta</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <item path="src/lanzador/ArgParser.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/lanzador/lanzador.cc" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/lib/logging/Logger.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/lib/logging/LoggerRegistry.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/lib/museo/constantes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/lib/system/System.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/puerta/ArgParser.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/puerta/ArgParser.cc" ex="false" tool="1" flavor2="4">
       </item>
-      <item path="src/puerta/puerta.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/puerta/puerta.cc" ex="false" tool="1" flavor2="4">
       </item>
     </conf>
   </confs>

@@ -23,10 +23,21 @@ puertaSources = \
 	puerta/ArgParser.h \
 	puerta/puerta.cc
 
+lanzadorSources = \
+	lanzador/ArgParser.cc \
+	lanzador/ArgParser.h \
+	lanzador/lanzador.cc
+
 bin_PROGRAMS = \
-	puerta/puerta
+	puerta/puerta \
+	lanzador/lanzador
 
 puerta_puerta_SOURCES = $(puertaSources) $(libSources)
 puerta_puerta_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/puerta
 puerta_puerta_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
 puerta_puerta_LDADD = $(YAMLCPP_LIBS)
+
+lanzador_lanzador_SOURCES = $(lanzadorSources) $(libSources)
+lanzador_lanzador_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/lanzador
+lanzador_lanzador_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
+lanzador_lanzador_LDADD = $(YAMLCPP_LIBS)
