@@ -1,2 +1,2 @@
 SUBDIRS = src
-EXTRA_DIST = bootstrap.sh nbproject
+EXTRA_DIST = bootstrap.sh nbproject make-command.sh
