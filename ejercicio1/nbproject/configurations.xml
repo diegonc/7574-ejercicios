@@ -72,7 +72,14 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="0/src/lib">
+      <folder path="0/src/lib/config">
+        <ccTool>
+          <incDir>
+            <pElem>src/lanzador</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/src/lib/system">
         <ccTool>
           <incDir>
             <pElem>src/puerta</pElem>
@@ -93,8 +100,18 @@
       <item path="src/lib/config/ConfigParser.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/lib/logging/Logger.cc" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src/lanzador</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/lib/logging/LoggerRegistry.cc" ex="false" tool="1" flavor2="4">
+        <ccTool>
+          <incDir>
+            <pElem>src/puerta</pElem>
+          </incDir>
+        </ccTool>
       </item>
       <item path="src/lib/system/Semaphore.cc" ex="false" tool="1" flavor2="4">
       </item>
