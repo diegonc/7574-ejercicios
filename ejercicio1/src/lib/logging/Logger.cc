@@ -156,7 +156,7 @@ const char* level_name(LevelId level)
 		case LEVEL_TRACE:
 			return "TRACE";
 		default:
-			std::ostringstream buffer ("Nivel inv·lido: ");
+			std::ostringstream buffer ("Nivel inv√°lido: ");
 			buffer << level;
 			throw std::logic_error (buffer.str ());
 	}
@@ -175,7 +175,7 @@ LevelId level_id (const std::string& name)
 	if ("TRACE" == name)
 		return LEVEL_TRACE;
 
-	std::ostringstream buffer ("Nombre de nivel inv·lido: ");
+	std::ostringstream buffer ("Nombre de nivel inv√°lido: ");
 	buffer << name;
 	throw std::logic_error (buffer.str ());
 }
