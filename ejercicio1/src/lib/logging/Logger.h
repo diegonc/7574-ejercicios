@@ -19,6 +19,7 @@ enum LevelId
 };
 
 const char* level_name(LevelId level);
+LevelId level_id(const std::string& name);
 
 class Logger : private NonCopyable
 {
@@ -65,6 +66,7 @@ class Logger : private NonCopyable
 	public:
 		Logger (const std::string& filename, const std::string& module);
 		Logger (const std::string& filename, const std::string& module, bool quiet);
+		Logger (const std::string& filename, const std::string& module, bool quiet, LevelId nivel);
 		~Logger ();
 
 		bool quiet () const { return _quiet; }

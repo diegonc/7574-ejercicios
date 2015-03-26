@@ -45,6 +45,20 @@ Logger::Logger (const std::string& filename, const std::string& module, bool qui
 	}
 }
 
+Logger::Logger (const std::string& filename, const std::string& module, bool quiet, LevelId nivel)
+	: fd (-1)
+	, filename (filename)
+	, module (module)
+	, _quiet (quiet)
+	, nivelLogger (nivel)
+	, printedModule(false)
+	, nivelMensaje (LEVEL_UNSET)
+{
+	if (!_quiet) {
+		open ();
+	}
+}
+
 Logger::~Logger ()
 {
 	if (fd != -1) {
@@ -142,10 +156,28 @@ const char* level_name(LevelId level)
 		case LEVEL_TRACE:
 			return "TRACE";
 		default:
-			std::ostringstream buffer ("Nivel inv√°lido: ");
+			std::ostringstream buffer ("Nivel inv·lido: ");
 			buffer << level;
 			throw std::logic_error (buffer.str ());
 	}
+}
+
+LevelId level_id (const std::string& name)
+{
+	if ("ERROR" == name)
+		return LEVEL_ERROR;
+	if ("WARN" == name)
+		return LEVEL_WARN;
+	if ("INFO" == name)
+		return LEVEL_INFO;
+	if ("DEBUG" == name)
+		return LEVEL_DEBUG;
+	if ("TRACE" == name)
+		return LEVEL_TRACE;
+
+	std::ostringstream buffer ("Nombre de nivel inv·lido: ");
+	buffer << name;
+	throw std::logic_error (buffer.str ());
 }
 
 Logger& Level::TRACE (Logger& logger)
