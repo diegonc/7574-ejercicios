@@ -33,7 +33,8 @@ int main (int argc, char** argv)
 			1, 0666);
 	mutex.persist ();
 
-	srand (time (NULL));
+	unsigned int seed = static_cast<unsigned int> (time (NULL));
+	srand (seed);
 	Museo& museo = svMuseo.get ();
 	while (true) {
 		mutex.wait ();
