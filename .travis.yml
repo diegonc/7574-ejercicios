@@ -1,11 +1,15 @@
 language: c
 
 before_install:
+  - sudo add-apt-repository -y
+      'deb http://gb.archive.ubuntu.com/ubuntu/ trusty universe'
   - sudo apt-get update
+  - apt-cache policy libyaml-cpp-dev
+  - apt-cache policy libboost1.55-dev
 
 install:
-  - sudo apt-get install libyaml-cpp-dev=0.5.1-1
-  - sudo apt-get install libboost1.55-dev
+  - sudo apt-get install -y libyaml-cpp-dev=0.5.1-1
+  - sudo apt-get install -y libboost1.55-dev
 
 script:
   - cd ejercicio1 && ./bootstrap.sh && ./configure && make
