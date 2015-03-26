@@ -10,4 +10,4 @@ install:
   - sudo apt-get install -y libboost1.55-dev
 
 script:
-  - cd ejercicio1 && ./bootstrap.sh && ./configure && make
+  - cd ejercicio1 && ./bootstrap.sh && ./configure && make V=1
