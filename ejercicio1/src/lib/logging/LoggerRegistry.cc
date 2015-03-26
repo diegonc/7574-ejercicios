@@ -29,7 +29,7 @@ void LoggerRegistry::applyConfig (const std::string& path)
 	YAML::Node config = YAML::LoadFile (path);
 
 	_filename = config["log-file"].as<std::string> ();
-	_defaultLevel = config["default"].as<int> ();
+	_defaultLevel = config["default"].as<LevelId> ();
 
 	YAML::Node loggers = config["loggers"];
 	if (loggers) {
