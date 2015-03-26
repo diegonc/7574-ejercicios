@@ -49,7 +49,7 @@ LevelId LoggerRegistry::getLoggerLevel (const std::string& name)
 	std::map<std::string, LevelId>::iterator it
 		= levels.find (name);
 	if (it != levels.end ())
-		return *it;
+		return it->second;
 	else
 		return _defaultLevel;
 }
