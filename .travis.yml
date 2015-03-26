@@ -1,0 +1,11 @@
+language: c
+
+before_install:
+	- sudo apt-get update
+
+install:
+	- sudo apt-get install libyaml-cpp-dev=0.5.1-1
+	- sudo apt-get install libboost1.55-dev
+
+script:
+	- cd ejercicio1 && ./bootstrap.sh && ./configure && make

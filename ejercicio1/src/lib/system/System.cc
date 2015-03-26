@@ -79,3 +79,8 @@ pid_t System::spawn (const char *file, char* const argv[])
 	}
 	return pid;
 }
+
+pid_t System::spawn (const char* file, std::vector<const char*>& args)
+{
+	return spawn (file, (char * const *) &args[0]);
+}

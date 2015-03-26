@@ -2,7 +2,7 @@
 #define SYSTEM_H
 
 #include <exception>
-
+#include <vector>
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
@@ -30,6 +30,7 @@ class System
 {
 	public:
 		static pid_t spawn (const char *file, char* const argv[]);
+		static pid_t spawn (const char* file, std::vector<const char*>& args);
 
 		template <typename T>
 		static void check (T err)
