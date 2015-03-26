@@ -11,8 +11,8 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 
 	ArgParser* argParser = static_cast<ArgParser*> (state->input);
 	switch (key) {
-		case 'd':
-			argParser->_debug = true;
+		case 'c':
+			argParser->_config = arg;
 			break;
 		case ARGP_KEY_END:
 			if (state->arg_num > 0) {
@@ -24,14 +24,13 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 }
 
 static struct argp_option options[] = {
-	{"debug", 'd', 0, 0, "Enable debug mode", 0},
 	{"config", 'c', "CONFIG_FILE", 0, "Use CONFIG_FILE as the configuration file", 0},
 	{0, 0, 0, 0, 0, 0}
 };
 
 static struct argp optionParser = {options, parserFunc, 0, 0, 0, 0, 0};
 
-ArgParser::ArgParser () : _debug (false), _config ("lanzador.yaml")
+ArgParser::ArgParser () : _config ("config.yml")
 {
 }
 

@@ -1,0 +1,8 @@
+modulos:
+    puerta: src/puerta/puerta
+
+logging:
+    config-file: logging.yml
+
+museo:
+    puertas: 5

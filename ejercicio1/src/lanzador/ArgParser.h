@@ -8,7 +8,6 @@
 class ArgParser : private NonCopyable
 {
 	private:
-		bool _debug;
 		std::string _config;
 
 		ArgParser();
@@ -21,7 +20,6 @@ class ArgParser : private NonCopyable
 
 		void parse (int argc, char **argv);
 
-		bool debug () const { return _debug; }
 		const std::string& config () const { return _config; }
 };
 

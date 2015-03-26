@@ -4,6 +4,8 @@ AM_CXXFLAGS = -Wall -Wextra -Wconversion
 AM_CPPFLAGS = -I$(srcdir)/lib
 
 libSources = \
+	lib/config/ConfigParser.cc \
+	lib/config/ConfigParser.h \
 	lib/logging/Logger.cc \
 	lib/logging/Logger.h \
 	lib/logging/LoggerRegistry.cc \

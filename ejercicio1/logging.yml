@@ -1,0 +1,4 @@
+log-file: ejercicio1.log
+default: INFO
+loggers:
+    Semaphore: ERROR
