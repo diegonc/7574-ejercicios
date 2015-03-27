@@ -2,10 +2,15 @@
 #include <config/ConfigParser.h>
 #include <fstream>
 #include <logging/LoggerRegistry.h>
+#include <museo/constantes.h>
+#include <museo/Museo.h>
 #include <signal.h>
 #include <sstream>
+#include <system/Semaphore.h>
+#include <system/SharedVariable.h>
 #include <system/System.h>
 #include <vector>
+#include <utils/yaml-converters.h>
 #include <yaml-cpp/yaml.h>
 
 int main (int argc, char** argv)
@@ -24,7 +29,26 @@ int main (int argc, char** argv)
 
 	YAML::Node state;
 	YAML::Node pids;
+	YAML::Node shms;
+	YAML::Node sems;
 	try {
+		logger << Level::INFO
+				<< "Creando IPCs..."
+				<< Logger::endl;
+
+		SharedVariable<Museo> svMuseo (
+			IPCName(constantes::PATH_NAME, constantes::AREA_MUSEO),
+			0666 | IPC_CREAT | IPC_EXCL);
+		Semaphore mutex(
+			IPCName(constantes::PATH_NAME, constantes::SEM_MUTEX),
+			1, 0666 | IPC_CREAT | IPC_EXCL);
+
+		Museo& museo = svMuseo.get ();
+		museo.abierto (false);
+		museo.capacidad (config.capacidad ());
+		museo.personas (0);
+		mutex.initialize ();
+
 		logger << Level::INFO
 				<< "Lanzando los procesos puerta..."
 				<< Logger::endl;
@@ -47,11 +71,20 @@ int main (int argc, char** argv)
 			pids[i] = child;
 		}
 
+		shms[0] = IPCName (constantes::PATH_NAME, constantes::AREA_MUSEO);
+		sems[0] = IPCName (constantes::PATH_NAME, constantes::SEM_MUTEX);
+
 		state["pids"] = pids;
+		state["shms"] = shms;
+		state["sems"] = sems;
 		std::ofstream stateFile ("session.yml");
 		stateFile << state;
+
+		svMuseo.persist ();
+		mutex.persist ();
+
 		return 0;
-	} catch (SystemErrorException& e) {
+	} catch (std::exception& e) {
 		logger << Level::ERROR
 				<< "Error lanzando procesos puerta: "
 				<< e.what ()
