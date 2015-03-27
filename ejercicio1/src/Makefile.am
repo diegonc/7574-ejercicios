@@ -31,9 +31,15 @@ lanzadorSources = \
 	lanzador/ArgParser.h \
 	lanzador/lanzador.cc
 
+finalizadorSources = \
+	finalizador/ArgParser.cc \
+	finalizador/ArgParser.h \
+	finalizador/finalizador.cc
+
 bin_PROGRAMS = \
 	puerta/puerta \
-	lanzador/lanzador
+	lanzador/lanzador \
+	finalizador/finalizador
 
 puerta_puerta_SOURCES = $(puertaSources) $(libSources)
 puerta_puerta_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/puerta
@@ -44,3 +50,8 @@ lanzador_lanzador_SOURCES = $(lanzadorSources) $(libSources)
 lanzador_lanzador_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/lanzador
 lanzador_lanzador_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
 lanzador_lanzador_LDADD = $(YAMLCPP_LIBS)
+
+finalizador_finalizador_SOURCES = $(finalizadorSources) $(libSources)
+finalizador_finalizador_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/finalizador
+finalizador_finalizador_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
+finalizador_finalizador_LDADD = $(YAMLCPP_LIBS)

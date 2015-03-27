@@ -2,6 +2,10 @@
 #include <fcntl.h>
 #include <logging/Logger.h>
 #include <logging/LoggerRegistry.h>
+#include <sys/ipc.h>
+#include <sys/types.h>
+#include <sys/sem.h>
+#include <sys/shm.h>
 #include <system/System.h>
 #include <unistd.h>
 
@@ -89,4 +93,45 @@ pid_t System::spawn (const char *file, char* const argv[])
 pid_t System::spawn (const char* file, std::vector<const char*>& args)
 {
 	return spawn (file, (char * const *) &args[0]);
+}
+
+void System::semrm (const IPCName& name)
+{
+	Logger& logger = LoggerRegistry::getLogger ("System");
+	logger << "Eliminando semáforo ["
+			<< name.path << "::" << name.index << "]" << Logger::endl;
+
+	key_t token = ftok (name.path.c_str (), name.index);
+	logger << "ftok devolvió " << token << Logger::endl;
+	System::check (token);
+
+	int id = semget (token, 0, 0);
+	logger << "semget devolvió " << id << Logger::endl;
+	System::check (id);
+
+	int err = semctl (id, 0, IPC_RMID);
+	logger << "semctl devolvió " << err << Logger::endl;
+	System::check (err);
+}
+
+void System::shmrm (const IPCName& name)
+{
+	Logger& logger = LoggerRegistry::getLogger ("System");
+	logger << "Eliminando memoria compartida ["
+			<< name.path << "::" << name.index << "]" << Logger::endl;
+
+	key_t token = ftok (name.path.c_str (), name.index);
+	logger << Level::DEBUG
+			<< "ftok devolvió " << token << Logger::endl;
+	System::check (token);
+
+	int id = shmget (token, 0, 0);
+	logger << Level::DEBUG
+			<< "shmget devolvió " << id << Logger::endl;
+	System::check (id);
+
+	int err = shmctl (id, IPC_RMID, NULL);
+	logger << Level::DEBUG
+			<< "shmctl devolvió " << err << Logger::endl;
+	System::check (err);
 }
