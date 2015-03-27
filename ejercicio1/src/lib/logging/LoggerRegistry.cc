@@ -1,6 +1,7 @@
 #include <logging/LoggerRegistry.h>
 #include <sstream>
 #include <stdexcept>
+#include <utils/yaml-converters.h>
 #include <yaml-cpp/yaml.h>
 
 LoggerRegistry::LoggerRegistry ()

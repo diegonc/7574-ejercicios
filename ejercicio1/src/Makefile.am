@@ -18,7 +18,8 @@ libSources = \
 	lib/system/SharedVariable.h \
 	lib/system/System.cc \
 	lib/system/System.h \
-	lib/utils/NonCopyable.h
+	lib/utils/NonCopyable.h \
+	lib/utils/yaml-converters.h
 
 puertaSources = \
 	puerta/ArgParser.cc \

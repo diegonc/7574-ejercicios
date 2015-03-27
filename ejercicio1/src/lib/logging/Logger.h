@@ -23,33 +23,6 @@ enum LevelId
 const char* level_name(LevelId level);
 LevelId level_id(const std::string& name);
 
-namespace YAML
-{
-	template<>
-	struct convert<LevelId>
-	{
-		static Node encode (const LevelId& level)
-		{
-			std::string name = level_name (level);
-			boost::algorithm::trim_right (name);
-			Node node;
-			node = name;
-			return node;
-		}
-
-		static bool decode (const Node& node, LevelId& level)
-		{
-			try {
-				std::string name = node.as<std::string> ();
-				level = level_id (name);
-				return true;
-			} catch (TypedBadConversion<std::string>& e) {
-				return false;
-			}
-		}
-	};
-}
-
 class Logger : private NonCopyable
 {
 	int fd;
