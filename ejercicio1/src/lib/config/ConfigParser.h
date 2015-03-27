@@ -10,6 +10,7 @@ class ConfigParser : private NonCopyable
 		std::string _modPuerta;
 		std::string _logConf;
 		int _puertas;
+		int _capacidad;
 
 		ConfigParser ();
 		~ConfigParser ();
@@ -22,6 +23,7 @@ class ConfigParser : private NonCopyable
 		const std::string& modPuerta () const { return _modPuerta; }
 		const std::string& logConf () const { return _logConf; }
 		int puertas () const { return _puertas; }
+		int capacidad () const { return _capacidad; }
 };
 
 #endif	/* CONFIGPARSER_H */

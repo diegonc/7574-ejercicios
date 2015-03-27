@@ -34,4 +34,5 @@ void ConfigParser::parse (const std::string& file)
 	}
 
 	_puertas = config["museo"]["puertas"].as<int> ();
+	_capacidad = config["museo"]["capacidad"].as<int> ();
 }

@@ -6,3 +6,4 @@ logging:
 
 museo:
     puertas: 5
+    capacidad: 10
