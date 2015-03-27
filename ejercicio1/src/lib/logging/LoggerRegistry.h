@@ -49,7 +49,7 @@ class LoggerRegistry : private NonCopyable
 			_defaultLevel = level;
 		}
 
-		bool defaultLevel () const
+		LevelId defaultLevel () const
 		{
 			return _defaultLevel;
 		}
