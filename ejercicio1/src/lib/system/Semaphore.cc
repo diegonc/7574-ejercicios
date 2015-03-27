@@ -23,7 +23,7 @@ Semaphore::Semaphore (IPCName name, int nsems, int flags) : nsems (nsems)
 	logger << "Creando semáforo ["
 			<< name.path << "::" << name.index << "]" << Logger::endl;
 
-	key_t token = ftok (name.path, name.index);
+	key_t token = ftok (name.path.c_str (), name.index);
 	logger << "ftok devolvió " << token << Logger::endl;
 	System::check (token);
 

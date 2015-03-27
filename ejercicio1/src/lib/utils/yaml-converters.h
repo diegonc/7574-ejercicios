@@ -2,6 +2,7 @@
 #define YAML_CONVERTERS_H
 
 #include <logging/Logger.h>
+#include <system/IPCName.h>
 #include <yaml-cpp/yaml.h>
 
 namespace YAML
@@ -25,6 +26,33 @@ namespace YAML
 				level = level_id (name);
 				return true;
 			} catch (TypedBadConversion<std::string>& e) {
+				return false;
+			}
+		}
+	};
+
+	template<>
+	struct convert<IPCName>
+	{
+		static Node encode (const IPCName& name)
+		{
+			Node node;
+			node["path"] = name.path;
+			node["index"] = name.index;
+			return node;
+		}
+
+		static bool decode (const Node& node, IPCName& name)
+		{
+			if (!node.IsMap ()) {
+				return false;
+			}
+
+			try {
+				name.path = node["path"].as<std::string> ();
+				name.index = node["index"].as<char> ();
+				return true;
+			} catch (std::exception& e) {
 				return false;
 			}
 		}
