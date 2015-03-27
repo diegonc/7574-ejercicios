@@ -23,6 +23,12 @@ int main (int argc, char** argv)
 	registry.filename ("ejercicio1.log");
 	registry.quiet (!args.debug ());
 
+	Logger& logger = LoggerRegistry::getLogger ("main");
+
+	logger << Level::DEBUG
+			<< "Accediendo a mecanismos de IPC"
+			<< Logger::endl;
+
 	SharedVariable<Museo> svMuseo (
 			IPCName(constantes::PATH_NAME, constantes::AREA_MUSEO),
 			0666);
@@ -34,11 +40,18 @@ int main (int argc, char** argv)
 	mutex.persist ();
 
 	unsigned int seed = static_cast<unsigned int> (time (NULL));
+	logger << Level::INFO
+			<< "Inicializando generador de números al azar con semilla: "
+			<< seed
+			<< Logger::endl;
 	srand (seed);
 	Museo& museo = svMuseo.get ();
 	while (true) {
 		mutex.wait ();
 		if (!museo.abierto ()) {
+			logger << Level::INFO
+					<< "El museo cerró. Sacando personas..."
+					<< Logger::endl;
 			int cant = museo.personas ();
 			while (cant > 0) {
 				museo.sacar ();
@@ -49,6 +62,10 @@ int main (int argc, char** argv)
 
 			int entra = rand () % 2;
 			if (entra) {
+				logger << Level::INFO
+						<< "Haciendo entrar una persona..."
+						<< Logger::endl;
+
 				mutex.wait ();
 				int personas = museo.personas ();
 				int cap = museo.capacidad ();
@@ -57,12 +74,23 @@ int main (int argc, char** argv)
 				}
 				mutex.signal ();
 			} else {
+				logger << Level::INFO
+						<< "Haciendo salir una persona..."
+						<< Logger::endl;
+
 				mutex.wait ();
 				if (museo.personas () > 0) {
 					museo.sacar ();
 				}
 				mutex.signal ();
 			}
+
+			int tprox = rand () % 10 + 1;
+			logger << Level::INFO
+					<< "Esperando " << tprox << " segundos antes del próximo"
+					<< " movimiento..."
+					<< Logger::endl;
+			sleep (tprox);
 		}
 	}
 
