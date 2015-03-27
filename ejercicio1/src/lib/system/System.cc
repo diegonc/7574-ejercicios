@@ -37,7 +37,7 @@ pid_t System::spawn (const char *file, char* const argv[])
 		// Esto provoca que en el padre read devuelva 0-
 		fcntl (fds[1], F_SETFD, fcntl (fds[1], F_GETFD) | FD_CLOEXEC);
 		int err = execvp (file, argv);
-
+		(void) err;
 		// Si llega hasta acá es que hubo error en exec
 		// Primero logeamos el error 
 		SystemErrorException e;
@@ -46,7 +46,7 @@ pid_t System::spawn (const char *file, char* const argv[])
 		r.application ("spawned");
 		r.quiet (quiet);
 		Logger& logger = LoggerRegistry::getLogger ("System");
-		logger << "Error ejecutando " << file << " : (" << err << ") "
+		logger << "Error ejecutando " << file << " : (" << e.number () << ") "
 				<< e.what () << Logger::endl;
 
 		// Luego notificamos al padre el código de error a traves
