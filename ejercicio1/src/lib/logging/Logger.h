@@ -55,9 +55,6 @@ class Logger : private NonCopyable
 	int fd;
 	std::string filename;
 	std::string module;
-	// indica si se debe generar mensajes de log
-	// ¿va a ser reemplazado por nivelLogger?
-	bool _quiet;
 	// indica el nivel a partir del que el Logger genera mensajes
 	// de log.
 	LevelId nivelLogger;
@@ -94,12 +91,8 @@ class Logger : private NonCopyable
 
 	public:
 		Logger (const std::string& filename, const std::string& module);
-		Logger (const std::string& filename, const std::string& module, bool quiet);
-		Logger (const std::string& filename, const std::string& module, bool quiet, LevelId nivel);
+		Logger (const std::string& filename, const std::string& module, LevelId nivel);
 		~Logger ();
-
-		bool quiet () const { return _quiet; }
-		void quiet (bool quiet) { _quiet = quiet; }
 
 		// operador << para poder escribir en el log
 		template<typename T>
@@ -126,10 +119,6 @@ class Level
 template<typename T>
 Logger& operator<< (Logger& logger, const T& o)
 {
-	if (logger.quiet ()) {
-		return logger;
-	}
-
 	if (logger.nivelMensaje == LEVEL_UNSET) {
 		logger.nivelMensaje = LEVEL_DEFLT;
 	}

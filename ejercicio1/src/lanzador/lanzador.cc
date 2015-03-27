@@ -19,7 +19,6 @@ int main (int argc, char** argv)
 	LoggerRegistry& registry = LoggerRegistry::getInstance ();
 	registry.applyConfig (config.logConf ());
 	registry.application ("lanzador");
-	registry.quiet (false);
 
 	Logger& logger = LoggerRegistry::getLogger ("main");
 

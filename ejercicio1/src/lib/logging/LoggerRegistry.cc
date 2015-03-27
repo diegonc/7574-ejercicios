@@ -4,8 +4,7 @@
 #include <yaml-cpp/yaml.h>
 
 LoggerRegistry::LoggerRegistry ()
-	: _quiet (true)
-	, _defaultLevel (LEVEL_INFO)
+	: _defaultLevel (LEVEL_INFO)
 {
 }
 
@@ -76,7 +75,6 @@ Logger& LoggerRegistry::getLogger (const std::string& name)
 		Logger* logger = new Logger (
 			  registry._filename
 			, loggerName.str ()
-			, registry._quiet
 			, loggerLevel);
 		registry.registry[loggerName.str ()] = logger;
 		return *logger;

@@ -21,7 +21,6 @@ int main (int argc, char** argv)
 	LoggerRegistry& registry = LoggerRegistry::getInstance ();
 	registry.application (oss.str ());
 	registry.filename ("ejercicio1.log");
-	registry.quiet (!args.debug ());
 
 	Logger& logger = LoggerRegistry::getLogger ("main");
 

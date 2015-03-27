@@ -12,7 +12,6 @@ class LoggerRegistry : private NonCopyable
 	std::map<std::string, LevelId> levels;
 	std::string _filename;
 	std::string _application;
-	bool _quiet;
 	LevelId _defaultLevel;
 
 	LoggerRegistry ();
@@ -45,14 +44,14 @@ class LoggerRegistry : private NonCopyable
 			return _application;
 		}
 
-		void quiet (bool isQuiet)
+		void defaultLevel (LevelId level)
 		{
-			_quiet = isQuiet;
+			_defaultLevel = level;
 		}
 
-		bool quiet () const
+		bool defaultLevel () const
 		{
-			return _quiet;
+			return _defaultLevel;
 		}
 };
 

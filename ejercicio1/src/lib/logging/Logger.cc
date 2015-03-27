@@ -24,39 +24,20 @@ Logger::Logger (const std::string& filename, const std::string& module)
 	: fd (-1)
 	, filename (filename)
 	, module (module)
-	, _quiet (true)
 	, nivelLogger (LEVEL_TRACE)
 	, printedModule(false)
 	, nivelMensaje (LEVEL_UNSET)
 {
 }
 
-Logger::Logger (const std::string& filename, const std::string& module, bool quiet)
+Logger::Logger (const std::string& filename, const std::string& module, LevelId nivel)
 	: fd (-1)
 	, filename (filename)
 	, module (module)
-	, _quiet (quiet)
-	, nivelLogger (LEVEL_TRACE)
-	, printedModule(false)
-	, nivelMensaje (LEVEL_UNSET)
-{
-	if (!_quiet) {
-		open ();
-	}
-}
-
-Logger::Logger (const std::string& filename, const std::string& module, bool quiet, LevelId nivel)
-	: fd (-1)
-	, filename (filename)
-	, module (module)
-	, _quiet (quiet)
 	, nivelLogger (nivel)
 	, printedModule(false)
 	, nivelMensaje (LEVEL_UNSET)
 {
-	if (!_quiet) {
-		open ();
-	}
 }
 
 Logger::~Logger ()
@@ -135,10 +116,6 @@ void Logger::reset ()
 
 Logger& operator<< (Logger& logger, Logger& (*pf)(Logger&))
 {
-	if (logger.quiet ()) {
-		return logger;
-	}
-
 	return pf (logger);
 }
 

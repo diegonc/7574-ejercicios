@@ -22,7 +22,7 @@ pid_t System::spawn (const char *file, char* const argv[])
 	// ver: http://davmac.wordpress.com/2008/11/25/forkexec-is-forked-up/
 	int fds[2];
 	pid_t pid;
-	bool quiet = LoggerRegistry::getInstance ().quiet ();
+	LevelId level = LoggerRegistry::getInstance ().defaultLevel ();
 	const char* filename = LoggerRegistry::getInstance ().filename ().c_str ();
 
 	if (pipe (fds) == -1) {
@@ -44,7 +44,7 @@ pid_t System::spawn (const char *file, char* const argv[])
 		LoggerRegistry& r = LoggerRegistry::getInstance ();
 		r.filename (filename);
 		r.application ("spawned");
-		r.quiet (quiet);
+		r.defaultLevel (level);
 		Logger& logger = LoggerRegistry::getLogger ("System");
 		logger << "Error ejecutando " << file << " : (" << e.number () << ") "
 				<< e.what () << Logger::endl;
