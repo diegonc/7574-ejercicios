@@ -52,7 +52,13 @@ pid_t System::spawn (const char *file, char* const argv[])
 		// Luego notificamos al padre el código de error a traves
 		// del pipe.
 		int reason = e.number ();
-		(void) write (fds[1], &reason, sizeof (reason));
+		ssize_t written = write (fds[1], &reason, sizeof (reason));
+		if (written != sizeof reason) {
+			logger << Level::ERROR
+				<< "No se pudo comunicar el código de error al padre."
+				<< "write devolvió: " << written
+				<< Logger::endl;
+		}
 		close (fds[1]);
 
 		// Finalmente salimos del proceso hijo
