@@ -11,6 +11,7 @@ struct Museo
 	void abierto (bool a) { _abierto = a; }
 
 	int personas () const { return _personas; }
+	void personas (int p) { _personas = p; }
 	void agregar () { _personas++; }
 	void sacar () { _personas--; }
 
