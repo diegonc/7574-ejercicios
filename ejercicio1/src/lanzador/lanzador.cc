@@ -1,5 +1,7 @@
 #include <ArgParser.h>
 #include <config/ConfigParser.h>
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <logging/LoggerRegistry.h>
 #include <museo/constantes.h>
@@ -49,6 +51,13 @@ int main (int argc, char** argv)
 		museo.personas (0);
 		mutex.initialize ();
 
+		unsigned int seed = static_cast<unsigned int> (time (NULL));
+		logger << Level::INFO
+				<< "Inicializando generador de numeros al azar con semilla "
+				<< seed
+				<< Logger::endl;
+		srand (seed);
+
 		logger << Level::INFO
 				<< "Lanzando los procesos puerta..."
 				<< Logger::endl;
@@ -70,6 +79,13 @@ int main (int argc, char** argv)
 			pid_t child = System::spawn (config.modPuerta ().c_str (), args);
 			System::check (child);
 			pids[i] = child;
+
+			int lapse = rand () % 5 + 1;
+			logger << Level::DEBUG
+					<< "Esperando " << lapse
+					<< " segundos hasta el lanzamiento de la próxima puerta"
+					<< Logger::endl;
+			sleep (lapse);
 		}
 
 		shms[0] = IPCName (constantes::PATH_NAME, constantes::AREA_MUSEO);
