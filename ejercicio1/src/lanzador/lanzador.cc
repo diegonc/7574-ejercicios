@@ -61,7 +61,8 @@ int main (int argc, char** argv)
 			std::string idPuerta = oss.str ();
 
 			args.push_back ("puerta");
-			args.push_back ("-d");
+			args.push_back ("-l");
+			args.push_back (config.logConf ().c_str ());
 			args.push_back ("-i");
 			args.push_back (idPuerta.c_str ());
 			args.push_back (NULL);
