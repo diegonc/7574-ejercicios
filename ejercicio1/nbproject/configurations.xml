@@ -3,6 +3,10 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="src">
+        <df name="administrador">
+          <in>ArgParser.cc</in>
+          <in>administrador.cc</in>
+        </df>
         <df name="finalizador">
           <in>ArgParser.cc</in>
           <in>finalizador.cc</in>
@@ -69,6 +73,13 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <folder path="0/src/administrador">
+        <ccTool>
+          <incDir>
+            <pElem>src/administrador</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <folder path="0/src/finalizador">
         <ccTool>
           <incDir>
@@ -97,9 +108,13 @@
           </incDir>
         </ccTool>
       </folder>
-      <item path="src/finalizador/ArgParser.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/administrador/ArgParser.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/finalizador/finalizador.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/administrador/administrador.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/finalizador/ArgParser.cc" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/finalizador/finalizador.cc" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/lanzador/ArgParser.cc" ex="false" tool="1" flavor2="4">
       </item>

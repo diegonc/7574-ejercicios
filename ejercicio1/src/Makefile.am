@@ -36,10 +36,16 @@ finalizadorSources = \
 	finalizador/ArgParser.h \
 	finalizador/finalizador.cc
 
+administradorSources = \
+	administrador/ArgParser.cc \
+	administrador/ArgParser.h \
+	administrador/administrador.cc
+
 bin_PROGRAMS = \
 	puerta/puerta \
 	lanzador/lanzador \
-	finalizador/finalizador
+	finalizador/finalizador \
+	administrador/administrador
 
 puerta_puerta_SOURCES = $(puertaSources) $(libSources)
 puerta_puerta_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/puerta
@@ -55,3 +61,8 @@ finalizador_finalizador_SOURCES = $(finalizadorSources) $(libSources)
 finalizador_finalizador_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/finalizador
 finalizador_finalizador_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
 finalizador_finalizador_LDADD = $(YAMLCPP_LIBS)
+
+administrador_administrador_SOURCES = $(administradorSources) $(libSources)
+administrador_administrador_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/administrador
+administrador_administrador_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
+administrador_administrador_LDADD = $(YAMLCPP_LIBS)
