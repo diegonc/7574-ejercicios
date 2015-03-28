@@ -49,13 +49,18 @@ int main (int argc, char** argv)
 		mutex.wait ();
 		if (!museo.abierto ()) {
 			logger << Level::INFO
-					<< "El museo cerró. Sacando personas..."
+					<< "El museo cerró. Sacando " << museo.personas ()
+					<< " personas..."
 					<< Logger::endl;
 			int cant = museo.personas ();
 			while (cant > 0) {
 				museo.sacar ();
 				cant = museo.personas ();
 			}
+
+			logger << Level::INFO
+					<< "Museo vacio..."
+					<< Logger::endl;
 		} else {
 			mutex.signal ();
 
