@@ -31,7 +31,7 @@ static struct argp_option options[] = {
 	{0, 0, 0, 0, 0, 0}
 };
 
-static struct argp optionParser = {options, parserFunc, 0, 0, 0, 0, 0};
+static struct argp optionParser = {options, parserFunc, "[SESSION_FILE]", 0, 0, 0, 0};
 
 ArgParser::ArgParser ()
 	: _session ("session.yml")
