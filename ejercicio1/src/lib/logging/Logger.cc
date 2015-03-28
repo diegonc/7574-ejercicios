@@ -78,7 +78,9 @@ void Logger::unlock () const
 
 Logger& Logger::endl (Logger& logger)
 {
-	if (logger.nivelMensaje <= logger.nivelLogger) {
+	LevelId msg = logger.nivelMensaje;
+	LevelId log = logger.nivelLogger;
+	if (msg != LEVEL_UNSET && msg <= log) {
 		logger.buffer << std::endl;
 
 		int err = errno;
