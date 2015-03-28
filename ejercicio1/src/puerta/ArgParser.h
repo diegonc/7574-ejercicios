@@ -2,12 +2,13 @@
 #define ARGPARSER_H
 
 #include <argp.h>
+#include <string>
 #include <utils/NonCopyable.h>
 
 class ArgParser : private NonCopyable
 {
 	private:
-		bool _debug;
+		std::string _logConf;
 		int _id;
 
 		ArgParser();
@@ -20,7 +21,7 @@ class ArgParser : private NonCopyable
 
 		void parse (int argc, char **argv);
 
-		bool debug () const { return _debug; }
+		const std::string& logConf () const { return _logConf; }
 		int id () const { return _id; }
 };
 

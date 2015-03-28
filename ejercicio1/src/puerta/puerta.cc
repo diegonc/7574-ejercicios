@@ -19,8 +19,8 @@ int main (int argc, char** argv)
 	oss << "puerta " << args.id ();
 
 	LoggerRegistry& registry = LoggerRegistry::getInstance ();
+	registry.applyConfig (args.logConf ());
 	registry.application (oss.str ());
-	registry.filename ("ejercicio1.log");
 
 	Logger& logger = LoggerRegistry::getLogger ("main");
 

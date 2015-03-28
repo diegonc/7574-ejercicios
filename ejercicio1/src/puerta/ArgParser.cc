@@ -11,8 +11,8 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 
 	ArgParser* argParser = static_cast<ArgParser*> (state->input);
 	switch (key) {
-		case 'd':
-			argParser->_debug = true;
+		case 'l':
+			argParser->_logConf = arg;
 			break;
 		case 'i':
 		{
@@ -34,14 +34,16 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 }
 
 static struct argp_option options[] = {
-	{"debug", 'd', 0, 0, "Enable debug mode", 0},
+	{"logconf", 'l', "LOG_CONF", 0, "Use LOG_CONF as the logging configuration file", 0},
 	{"id", 'i', "ID_PUERTA", 0, "Give an id to this door", 0},
 	{0, 0, 0, 0, 0, 0}
 };
 
 static struct argp optionParser = {options, parserFunc, 0, 0, 0, 0, 0};
 
-ArgParser::ArgParser () : _debug (false), _id (getpid ())
+ArgParser::ArgParser ()
+	: _logConf ("logging.yml")
+	, _id (getpid ())
 {
 }
 
