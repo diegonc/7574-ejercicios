@@ -1,0 +1,10 @@
+
+Dependencias
+============
+
+Se debe actualizar la lista de paquetes:
+  * apt-get update
+
+y luego instalar los siguientes paquetes:
+  * yaml-cpp: apt-get install libyaml-cpp-dev=0.5.1-1
+  * boost   : apt-get install libboost1.55-dev

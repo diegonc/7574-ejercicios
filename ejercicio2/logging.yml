@@ -1,0 +1,4 @@
+log-file: ejercicio2.log
+default: TRACE
+loggers:
+    Semaphore: ERROR

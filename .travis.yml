@@ -11,3 +11,4 @@ install:
 
 script:
   - cd ejercicio1 && ./bootstrap.sh && ./configure && make -j4
+  - cd ejercicio2 && ./bootstrap.sh && ./configure && make -j4
