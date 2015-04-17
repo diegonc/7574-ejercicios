@@ -9,6 +9,9 @@ install:
   - sudo apt-get install -y libyaml-cpp-dev=0.5.1-1
   - sudo apt-get install -y libboost1.55-dev
 
+before_script:
+  - PROJ_ROOT=`pwd`
+
 script:
-  - cd ejercicio1 && ./bootstrap.sh && ./configure && make -j4
-  - cd ejercicio2 && ./bootstrap.sh && ./configure && make -j4
+  - cd $PROJ_ROOT/ejercicio1 && ./bootstrap.sh && ./configure && make -j4
+  - cd $PROJ_ROOT/ejercicio2 && ./bootstrap.sh && ./configure && make -j4
