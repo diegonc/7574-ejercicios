@@ -78,5 +78,25 @@ int main (int argc, char** argv)
 		}
 	}
 
+	YAML::Node msgq = session["msgq"];
+	if (msgq) {
+		logger << Level::INFO
+				<< "Eliminando colas..."
+				<< Logger::endl;
+
+		for (size_t i = 0; i < msgq.size (); i++) {
+			IPCName name = msgq[i].as<IPCName> ();
+			try {
+				System::mqrm (name);
+			} catch (SystemErrorException& e) {
+				logger << Level::ERROR
+						<< "Error al eliminar cola "
+						<< '[' << name.path << ':' << name.index << ']'
+						<< ". " << e.what ()
+						<< Logger::endl;
+			}
+		}
+	}
+
 	return 0;
 }

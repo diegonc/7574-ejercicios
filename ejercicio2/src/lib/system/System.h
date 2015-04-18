@@ -35,6 +35,7 @@ class System
 
 		static void semrm (const IPCName& name);
 		static void shmrm (const IPCName& name);
+		static void mqrm (const IPCName& name);
 
 		template <typename T>
 		static void check (T err)

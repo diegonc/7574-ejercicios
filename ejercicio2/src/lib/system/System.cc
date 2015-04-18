@@ -3,6 +3,7 @@
 #include <logging/Logger.h>
 #include <logging/LoggerRegistry.h>
 #include <sys/ipc.h>
+#include <sys/msg.h>
 #include <sys/types.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
@@ -133,5 +134,27 @@ void System::shmrm (const IPCName& name)
 	int err = shmctl (id, IPC_RMID, NULL);
 	logger << Level::DEBUG
 			<< "shmctl devolvió " << err << Logger::endl;
+	System::check (err);
+}
+
+void System::mqrm (const IPCName& name)
+{
+	Logger& logger = LoggerRegistry::getLogger ("System");
+	logger << "Eliminando cola ["
+			<< name.path << "::" << name.index << "]" << Logger::endl;
+
+	key_t token = ftok (name.path.c_str (), name.index);
+	logger << Level::DEBUG
+			<< "ftok devolvió " << token << Logger::endl;
+	System::check (token);
+
+	int id = msgget (token, 0);
+	logger << Level::DEBUG
+			<< "msgget devolvió " << id << Logger::endl;
+	System::check (id);
+
+	int err = msgctl (id, IPC_RMID, NULL);
+	logger << Level::DEBUG
+			<< "msgctl devolvió " << err << Logger::endl;
 	System::check (err);
 }
