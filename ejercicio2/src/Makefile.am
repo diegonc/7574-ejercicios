@@ -25,6 +25,13 @@ libSources = \
 	lib/utils/NonCopyable.h \
 	lib/utils/yaml-converters.h
 
+personaSources = \
+	persona/ArgParser.cc \
+	persona/ArgParser.h \
+	persona/CtrlPersona.cc \
+	persona/CtrlPersona.h \
+	persona/persona.cc
+
 puertaSources = \
 	puerta/ArgParser.cc \
 	puerta/ArgParser.h \
@@ -46,10 +53,16 @@ administradorSources = \
 	administrador/administrador.cc
 
 bin_PROGRAMS = \
+	persona/persona \
 	puerta/puerta \
 	lanzador/lanzador \
 	finalizador/finalizador \
 	administrador/administrador
+
+persona_persona_SOURCES = $(personaSources) $(libSources)
+persona_persona_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/persona
+persona_persona_CXXFLAGS = $(AM_CXXFLAGS) -I$(srcdir)/persona
+persona_persona_LDADD = $(YAMLCPP_LIBS)
 
 puerta_puerta_SOURCES = $(puertaSources) $(libSources)
 puerta_puerta_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/puerta
