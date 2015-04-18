@@ -12,6 +12,9 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 		case 'l':
 			argParser->_logConf = arg;
 			break;
+		case 's':
+			argParser->_sesion = arg;
+			break;
 		case ARGP_KEY_ARG:
 			if (state->arg_num == 0) {
 				std::string op = arg;
@@ -36,6 +39,7 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 
 static struct argp_option options[] = {
 	{"logconf", 'l', "LOG_CONF", 0, "Use LOG_CONF as the logging configuration file", 0},
+	{"sesion", 's', "SESION", 0, "Use SESION as the session configuration file", 0},
 	{0, 0, 0, 0, 0, 0}
 };
 
@@ -48,6 +52,7 @@ static struct argp optionParser = {options, parserFunc, "OPERACION", doc, 0, 0, 
 
 ArgParser::ArgParser ()
 	: _logConf ("logging.yml")
+	, _sesion ("session.yml")
 {
 }
 

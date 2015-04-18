@@ -10,6 +10,7 @@ class ArgParser : private NonCopyable
 	private:
 		std::string _operacion;
 		std::string _logConf;
+		std::string _sesion;
 
 		ArgParser();
 		~ArgParser();
@@ -23,6 +24,7 @@ class ArgParser : private NonCopyable
 
 		const std::string& operacion () const { return _operacion; }
 		const std::string& logConf () const { return _logConf; }
+		const std::string& sesion () const { return _sesion; }
 };
 
 #endif
