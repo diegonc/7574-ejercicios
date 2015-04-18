@@ -9,7 +9,7 @@ class ArgParser : private NonCopyable
 {
 	private:
 		std::string _logConf;
-		int _puerta;
+		long _puerta;
 
 		ArgParser();
 		~ArgParser();
