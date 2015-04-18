@@ -3,6 +3,7 @@
 
 ConfigParser::ConfigParser ()
 	: _modPuerta ("puerta")
+	, _modPersona ("persona")
 	, _logConf ("logging.yml")
 	, _puertas (1)
 {
@@ -26,6 +27,8 @@ void ConfigParser::parse (const std::string& file)
 	if (mods) {
 		if (mods["puerta"])
 			_modPuerta = mods["puerta"].as<std::string> ();
+		if (mods["persona"])
+			_modPersona = mods["persona"].as<std::string> ();
 	}
 
 	YAML::Node logging = config["logging"];

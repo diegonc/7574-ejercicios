@@ -8,6 +8,7 @@ class ConfigParser : private NonCopyable
 {
 	private:
 		std::string _modPuerta;
+		std::string _modPersona;
 		std::string _logConf;
 		int _puertas;
 		int _capacidad;
@@ -21,6 +22,7 @@ class ConfigParser : private NonCopyable
 		void parse (const std::string& file);
 
 		const std::string& modPuerta () const { return _modPuerta; }
+		const std::string& modPersona () const { return _modPersona; }
 		const std::string& logConf () const { return _logConf; }
 		int puertas () const { return _puertas; }
 		int capacidad () const { return _capacidad; }

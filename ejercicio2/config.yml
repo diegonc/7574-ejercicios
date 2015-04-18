@@ -1,5 +1,6 @@
 modulos:
     puerta: src/puerta/puerta
+    persona: src/persona/persona
 
 logging:
     config-file: logging.yml
