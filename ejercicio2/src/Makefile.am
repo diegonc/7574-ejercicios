@@ -12,7 +12,11 @@ libSources = \
 	lib/logging/LoggerRegistry.h \
 	lib/museo/constantes.h \
 	lib/museo/Museo.h \
+	lib/museo/OpCierre.h \
+	lib/museo/OpPersona.h \
+	lib/museo/OpPuerta.h \
 	lib/system/IPCName.h \
+	lib/system/MessageQueue.h \
 	lib/system/Semaphore.cc \
 	lib/system/Semaphore.h \
 	lib/system/SharedVariable.h \

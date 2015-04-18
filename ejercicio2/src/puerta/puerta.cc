@@ -1,12 +1,15 @@
 #include <ArgParser.h>
-#include <cstdlib>
-#include <ctime>
 #include <logging/Logger.h>
 #include <logging/LoggerRegistry.h>
 #include <museo/constantes.h>
 #include <museo/Museo.h>
+#include <museo/OpCierre.h>
+#include <museo/OpPersona.h>
+#include <museo/OpPuerta.h>
+#include <set>
 #include <sstream>
 #include <system/IPCName.h>
+#include <system/MessageQueue.h>
 #include <system/Semaphore.h>
 #include <system/SharedVariable.h>
 
@@ -29,74 +32,135 @@ int main (int argc, char** argv)
 			<< Logger::endl;
 
 	SharedVariable<Museo> svMuseo (
-			IPCName(constantes::PATH_NAME, constantes::AREA_MUSEO),
-			0666);
+		IPCName (constantes::PATH_NAME, constantes::AREA_MUSEO),
+		0666);
 	svMuseo.persist ();
 
-	Semaphore mutex(
-			IPCName(constantes::PATH_NAME, constantes::SEM_MUTEX),
-			1, 0666);
+	Semaphore mutex (
+		IPCName (constantes::PATH_NAME, constantes::SEM_MUTEX),
+		1, 0666);
 	mutex.persist ();
 
-	unsigned int seed = static_cast<unsigned int> (time (NULL));
-	logger << Level::INFO
-			<< "Inicializando generador de números al azar con semilla: "
-			<< seed
-			<< Logger::endl;
-	srand (seed);
+	MessageQueue<OpPuerta> mqPuertas (
+		IPCName (constantes::PATH_NAME, constantes::MQ_PUERTAS),
+		0666);
+	mqPuertas.persist ();
+
+	MessageQueue<OpPersona> mqPersonas (
+		IPCName (constantes::PATH_NAME, constantes::MQ_PERSONAS),
+		0666);
+	mqPersonas.persist ();
+
+	MessageQueue<OpCierre> mqCierre (
+		IPCName (constantes::PATH_NAME, constantes::MQ_CIERRE),
+		0666);
+	mqCierre.persist ();
+
 	Museo& museo = svMuseo.get ();
-	while (true) {
-		mutex.wait ();
-		if (!museo.abierto ()) {
+	std::set<long> personasAdentro;
+	bool cerro = false;
+	while (!cerro || !personasAdentro.empty ()) {
+		OpPuerta op = mqPuertas.receive (args.id ());
+
+		logger << Level::DEBUG
+			<< "OpPuerta { "
+			<< op.mtype << ", "
+			<< op.causa << ", "
+			<< op.persona << "}" << Logger::endl;
+
+		switch (op.causa) {
+		case PUERTA_CAUSA_ENTRADA:
+		{
 			logger << Level::INFO
-					<< "El museo cerró. Sacando " << museo.personas ()
-					<< " personas..."
-					<< Logger::endl;
-			int cant = museo.personas ();
-			while (cant > 0) {
-				museo.sacar ();
-				cant = museo.personas ();
+				<< "Persona " << op.persona
+				<< " solicita entrar al museo."
+				<< Logger::endl;
+
+			OpPersona pers;
+			pers.mtype = op.persona;
+
+			mutex.wait ();
+			bool abierto = museo.abierto ();
+			if (abierto) {
+				bool entro = museo.entrar ();
+				mutex.signal ();
+
+				logger << "Museo abierto" << Logger::endl;
+
+				if (entro) {
+					personasAdentro.insert (op.persona);
+					pers.causa = PERSONA_CAUSA_NOTIF_ENTRADA;
+					logger << "La persona " << op.persona
+						<< " entró al museo"
+						<< Logger::endl;
+				} else {
+					pers.causa = PERSONA_CAUSA_NOTIF_LLENO;
+					logger << "Museo lleno" << Logger::endl;
+				}
+			} else {
+				mutex.signal ();
+				pers.causa = PERSONA_CAUSA_NOTIF_CERRADO;
+
+				logger << Level::INFO
+					<< "Museo cerrado" << Logger::endl;
 			}
 
 			logger << Level::INFO
-					<< "Museo vacio..."
-					<< Logger::endl;
-		} else {
+				<< "Notificando Persona: OpPersona {"
+				<< pers.mtype << ", "
+				<< pers.causa << "}" << Logger::endl;
+
+			mqPersonas.send (pers);
+			break;
+		}
+		case PUERTA_CAUSA_SALIDA:
+		{
+			logger << Level::INFO
+				<< "Persona " << op.persona
+				<< " solicita salir del museo."
+				<< Logger::endl;
+
+			mutex.wait ();
+			museo.salir ();
 			mutex.signal ();
 
-			int entra = rand () % 2;
-			if (entra) {
-				logger << Level::INFO
-						<< "Haciendo entrar una persona..."
-						<< Logger::endl;
+			personasAdentro.erase (op.persona);
 
-				mutex.wait ();
-				int personas = museo.personas ();
-				int cap = museo.capacidad ();
-				if (personas < cap && museo.abierto ()) {
-					museo.agregar ();
-				}
-				mutex.signal ();
-			} else {
-				logger << Level::INFO
-						<< "Haciendo salir una persona..."
-						<< Logger::endl;
-
-				mutex.wait ();
-				if (museo.personas () > 0) {
-					museo.sacar ();
-				}
-				mutex.signal ();
-			}
-
-			int tprox = rand () % 10 + 1;
+			OpPersona pers;
+			pers.mtype = op.persona;
+			pers.causa = PERSONA_CAUSA_CONF_SALIDA;
+			mqPersonas.send (pers);
+			break;
+		}
+		case PUERTA_CAUSA_CIERRE:
 			logger << Level::INFO
-					<< "Esperando " << tprox << " segundos antes del próximo"
-					<< " movimiento..."
+				<< "Se recibió la notificación de cierre."
+				<< Logger::endl;
+
+			logger << Level::INFO
+				<< "Hay " << personasAdentro.size ()
+				<< " personas en el museo que entraron por aquí"
+				<< Logger::endl;
+
+			cerro = true;
+			for (std::set<long>::iterator it = personasAdentro.begin ();
+					it != personasAdentro.end (); ++it) {
+				OpCierre op;
+				op.mtype = *it;
+				mqCierre.send (op);
+
+				logger << Level::DEBUG
+					<< "Persona " << *it << " notificada"
 					<< Logger::endl;
-			sleep (tprox);
+			}
+			break;
 		}
 	}
+
+	logger << Level::INFO
+		<< "El museo cerró y todas las personas salieron. "
+		<< "Finalizado"
+		<< Logger::endl;
 
 	return 0;
 }
