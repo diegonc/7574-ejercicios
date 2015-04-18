@@ -110,7 +110,14 @@ OpPersona CtrlPersona::entrarAlMuseo ()
 	logger << Level::INFO
 		<< "aguardando respuesta de puerta" << Logger::endl;
 
-	return mqPersonas.receive (idPersona);
+	OpPersona resp = mqPersonas.receive (idPersona);
+
+	logger << Level::INFO
+		<< "respuesta de la puerta: OpPersona { "
+		<< resp.mtype << ", " << resp.causa << "}"
+		<< Logger::endl;
+
+	return resp;
 }
 
 void CtrlPersona::recorrerMuseo ()
@@ -125,6 +132,10 @@ void CtrlPersona::recorrerMuseo ()
 		<< tiempo << " segundos" << Logger::endl;
 
 	sleep (tiempo);
+
+	logger << Level::INFO
+		<< "recorrida finalizada"
+		<< Logger::endl;
 }
 
 void CtrlPersona::aguardarCierre (long mtype)
@@ -136,6 +147,10 @@ void CtrlPersona::aguardarCierre (long mtype)
 		<< Logger::endl;
 
 	mqCierre.receive (mtype);
+
+	logger << Level::INFO
+		<< "Mensaje de cierre recibido"
+		<< Logger::endl;
 }
 
 void CtrlPersona::salirDelMuseo ()
@@ -156,6 +171,12 @@ void CtrlPersona::salirDelMuseo ()
 		<< "aguardando respuesta" << Logger::endl;
 
 	OpPersona resp = mqPersonas.receive (idPersona);
+
+	logger << Level::INFO
+		<< "respuesta recibida: OpPersona {"
+		<< resp.mtype << ", " << resp.causa << "}"
+		<< Logger::endl;
+
 	if (resp.causa != PERSONA_CAUSA_CONF_SALIDA) {
 		logger << Level::ERROR
 			<< "la puerta respondió con una causa erronea: "
