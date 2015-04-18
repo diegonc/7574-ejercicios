@@ -22,7 +22,7 @@ class ArgParser : private NonCopyable
 		void parse (int argc, char **argv);
 
 		const std::string& logConf () const { return _logConf; }
-		int puerta () const { return _puerta; }
+		long puerta () const { return _puerta; }
 };
 
 #endif
