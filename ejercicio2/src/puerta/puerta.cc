@@ -126,6 +126,11 @@ int main (int argc, char** argv)
 
 			personasAdentro.erase (op.persona);
 
+			logger << Level::INFO
+				<< "Se retiró a la persona del museo. "
+				<< "Enviando confirmación"
+				<< Logger::endl;
+
 			OpPersona pers;
 			pers.mtype = op.persona;
 			pers.causa = PERSONA_CAUSA_CONF_SALIDA;
