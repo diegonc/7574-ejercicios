@@ -49,6 +49,7 @@ std::set<long> cargarPuertasEnSesion (const std::string& sesion)
 	while (it != puertas.end ()) {
 		long id = it->as<long> ();
 		idPuertas.insert (id);
+		++it;
 	}
 	return idPuertas;
 }
