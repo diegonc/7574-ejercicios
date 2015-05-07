@@ -52,12 +52,18 @@ administradorSources = \
 	administrador/ArgParser.h \
 	administrador/administrador.cc
 
+mkpersonasSources = \
+	mkpersonas/ArgParser.cc \
+	mkpersonas/ArgParser.h \
+	mkpersonas/mkpersonas.cc
+
 bin_PROGRAMS = \
 	persona/persona \
 	puerta/puerta \
 	lanzador/lanzador \
 	finalizador/finalizador \
-	administrador/administrador
+	administrador/administrador \
+	mkpersonas/mkpersonas
 
 persona_persona_SOURCES = $(personaSources) $(libSources)
 persona_persona_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/persona
@@ -83,3 +89,8 @@ administrador_administrador_SOURCES = $(administradorSources) $(libSources)
 administrador_administrador_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/administrador
 administrador_administrador_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
 administrador_administrador_LDADD = $(YAMLCPP_LIBS)
+
+mkpersonas_mkpersonas_SOURCES = $(mkpersonasSources) $(libSources)
+mkpersonas_mkpersonas_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/mkpersonas
+mkpersonas_mkpersonas_CXXFLAGS = $(AM_CXXFLAGS) $(YAMLCPP_CFLAGS)
+mkpersonas_mkpersonas_LDADD = $(YAMLCPP_LIBS)
