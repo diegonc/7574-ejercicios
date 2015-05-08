@@ -18,7 +18,7 @@ int parserFunc (int key, char *arg, struct argp_state *state)
 		{
 			unsigned long puerta = strtoul (arg, NULL, 10);
 			if (puerta == 0) {
-				argp_failure (state, 1, 0, "the ID_PUERTA argument must be a number greated than 0");
+				argp_failure (state, 1, 0, "the ID_PUERTA argument must be a number greater than 0");
 			} else {
 				argParser->_puerta = puerta;
 			}
