@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <ArgParser.h>
 #include <config/ConfigParser.h>
 #include <cstdlib>
@@ -9,6 +10,14 @@
 #include <vector>
 #include <utils/yaml-converters.h>
 #include <yaml-cpp/yaml.h>
+
+void millisleep (unsigned long millis)
+{
+	struct timespec per;
+	per.tv_sec = millis / 1000;
+	per.tv_nsec = (millis % 1000) * 1000000;
+	nanosleep (&per, NULL);
+}
 
 int main (int argc, char** argv)
 {
@@ -32,16 +41,72 @@ int main (int argc, char** argv)
 	YAML::Node puertas = session["puertas"];
 
 	logger << Level::INFO
-		<< "Lanzando persona..." << Logger::endl;
+		<< "Generando " << args.personas ()
+		<< " personas" << Logger::endl;
+	logger << Level::INFO
+		<< "Esperando hasta " << args.maxWaitBatch ()
+		<< " milisegundos entre batches"
+		<< Logger::endl;
+	logger << Level::INFO
+		<< "Esperando hasta " << args.maxWaitPerson ()
+		<< " milisegundos entre personas"
+		<< Logger::endl;
+	logger << Level::INFO
+		<< "Generando batches de hasta " << args.maxBatchSize ()
+		<< " personas" << Logger::endl;
 
-	std::string numPuerta = puertas[0].as<std::string> ();
+	unsigned int seed = static_cast<unsigned int> (time (NULL));
+	logger << Level::DEBUG
+		<< "Inicializando generador de números al azar con semilla: "
+		<< seed << Logger::endl;
+	srand (seed);
 
-	std::vector<const char*> params;
-	params.push_back (config.modPuerta ().c_str ());
-	params.push_back (numPuerta.c_str ());
-	params.push_back (NULL);
+	unsigned long personas = args.personas ();
+	do {
+		unsigned long batch = 1 + rand () % args.maxBatchSize ();
+		batch = std::min (personas, batch);
 
-	System::spawn (config.modPuerta ().c_str (), params);
+		logger << Level::INFO
+			<< "Iniciando batch de " << batch
+			<< " personas" << Logger::endl;
+
+		while (batch > 0) {
+			int idxPuerta = rand () % puertas.size ();
+			std::string numPuerta = puertas[idxPuerta].as<std::string> ();
+
+			logger << Level::INFO
+				<< "Lanzando persona por puerta "
+				<< numPuerta << Logger::endl;
+
+			std::vector<const char*> params;
+			params.push_back (config.modPersona ().c_str ());
+			params.push_back (numPuerta.c_str ());
+			params.push_back (NULL);
+
+			System::spawn (config.modPersona ().c_str (), params);
+
+			if (batch > 1) {
+				unsigned long millis = 100 + rand () % args.maxWaitPerson ();
+				logger << Level::INFO
+					<< "Esperando " << millis
+					<< " milisegundos hasta próximo lanzamiento"
+					<< Logger::endl;
+				millisleep (millis);
+			}
+
+			batch--;
+			personas--;
+		}
+
+		if (personas > 0) {
+			unsigned long millis = 100 + rand () % args.maxWaitBatch ();
+			logger << Level::INFO
+				<< "Esperando " << millis
+				<< " milisegundos hasta próximo batch"
+				<< Logger::endl;
+			millisleep (millis);
+		}
+	} while (personas > 0);
 
 	return 0;
 }
