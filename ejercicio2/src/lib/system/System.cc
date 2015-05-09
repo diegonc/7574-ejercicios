@@ -93,6 +93,16 @@ pid_t System::spawn (const char *file, char* const argv[])
 
 pid_t System::spawn (const char* file, std::vector<const char*>& args)
 {
+	Logger& logger = LoggerRegistry::getLogger ("System::spawn");
+	logger << Level::DEBUG
+		<< "Lanzando " << file << ". Args: ";
+
+	logger << args[0];
+	for (size_t i=1; i < args.size (); i++)
+		if (args[i] != NULL)
+			logger << " " << args[i];
+	logger << Logger::endl;
+
 	return spawn (file, (char * const *) &args[0]);
 }
 
