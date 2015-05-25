@@ -70,8 +70,8 @@ static struct argp_option options[] = {
 	{"config", 'c', "CONFIG_FILE", 0, "Use CONFIG_FILE as the configuration file", 0},
 	{"session", 's', "SESSION_FILE", 0, "Use SESSION_FILE as the session file", 0},
 	{"persons", 'p', "PERSONS_COUNT", 0, "Generate up to PERSONS_COUNT persons", 0},
-	{"max-wait-batch", 1000, "WAIT_MSEC", 0, "Wait WAIT_MSEC milli-seconds between batchs", 0},
-	{"max-wait-person", 1001, "WAIT_MSEC", 0, "Wait WAIT_MSEC milli-seconds between batchs", 0},
+	{"max-wait-batch", 1000, "WAIT_MSEC", 0, "Wait WAIT_MSEC milli-seconds between batches", 0},
+	{"max-wait-person", 1001, "WAIT_MSEC", 0, "Wait WAIT_MSEC milli-seconds between persons", 0},
 	{"max-batch-size", 'b', "BATCH_SIZE", 0, "Generate up to BATCH_SIZE persons per batch", 0},
 	{0, 0, 0, 0, 0, 0}
 };
