@@ -1,0 +1,98 @@
+Compilación
+===========
+
+Dentro de la carpeta donde está este archivo se encuentran
+las carpetas de cada ejercicio.
+
+   *
+    \+-- ejercicio1/
+     +-- ejercicio2/
+     +-- README
+
+Ambos ejercicios son proyectos manejados por autotools por
+lo que el proceso de compilación es el mismo para los dos.
+
+Por ejemplo para compilar el ejercicio1:
+
+    $ cd ejercicio1
+
+Se genera el script configure:
+
+    $ ./bootstrap.sh
+
+Luego se configura el proyecto (con los flags para que se
+pueda depurar con gdb):
+
+    $ ./configure \
+        CFLAGS="-O0 -g3 -gdwarf-2" \
+		CXXFLAGS="-O0 -g3 -gdwarf-2"
+
+Finalmente se construye:
+
+    $ make
+
+Ejecución
+=========
+
+La ejecución ha sido probada desde el directorio del
+ejercicio donde se encuentran los archivos de configuración
+requeridos:
+
+    * config.yml  : donde se configura la aplicación
+    * logging.yml : donde se configura la biblioteca de log
+    * session.yml : donde se guardan parámetros de ejecución
+                      - IPCs usados
+                      - Identificadores de procesos a matar (ejercicio1)
+                      - Identificadores de puertas (ejercicio2)
+
+Ejercicio 1
+-----------
+
+    $ cd ejercicio1
+    $ src/lanzador/lanzador
+    $ src/administrador/administrador abrir
+    $ src/administrador/administrador cerrar
+    $ src/finalizador/finalizador
+
+
+Ejercicio 2
+-----------
+
+    $ cd ejercicio2
+    $ src/lanzador/lanzador
+    $ src/persona/persona 1 # por puerta 1, museo cerrado
+    $ src/administrador/administrador abrir
+
+Generar 100 personas de a tandas de hasta 15 esperando
+1.5 segundos entre tandas:
+    $ src/mkpersonas/mkpersonas -p100 -b15 --max-wait-batch=1500 &
+
+    $ src/administrador/administrador cerrar
+    $ src/finalizador/finalizador
+
+NetBeans
+========
+
+Alternativamente, los ejercicios pueden construirse con NetBeans.
+Ya se incluyen los archivos necesarios por lo que solo hay que
+importar los ejercicios desde NetBeans.
+
+Se incluye el script make-command.sh que es el que ejecuta NetBeans
+para construir el proyecto y reproduce los pasos de la sección
+anterior.
+
+Dependencias
+============
+
+Se debe actualizar la lista de paquetes:
+  * apt-get update
+
+y luego instalar los siguientes paquetes:
+  * yaml-cpp: apt-get install libyaml-cpp-dev=0.5.1-1
+  * boost   : apt-get install libboost1.55-dev
+
+Si hay problemas al correr el script bootstrap.sh es posible
+que falten las autotools:
+  * autoconf: apt-get install autoconf
+  * automake: apt-get install automake
+
