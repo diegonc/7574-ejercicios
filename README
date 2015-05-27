@@ -84,7 +84,12 @@ anterior.
 Dependencias
 ============
 
-Se debe actualizar la lista de paquetes:
+En el archivo /etc/apt/apt.conf.d/00knoppix se debe modificar la segunda
+linea para que se vea como sigue:
+
+    APT::Default-Release "jessie";
+
+Luego se debe actualizar la lista de paquetes:
   * apt-get update
 
 y luego instalar los siguientes paquetes:
