@@ -25,7 +25,7 @@ pueda depurar con gdb):
 
     $ ./configure \
         CFLAGS="-O0 -g3 -gdwarf-2" \
-		CXXFLAGS="-O0 -g3 -gdwarf-2"
+        CXXFLAGS="-O0 -g3 -gdwarf-2"
 
 Finalmente se construye:
 
