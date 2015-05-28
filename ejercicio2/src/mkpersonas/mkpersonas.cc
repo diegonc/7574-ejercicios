@@ -1,9 +1,11 @@
 #include <algorithm>
 #include <ArgParser.h>
+#include <cassert>
 #include <config/ConfigParser.h>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <limits>
 #include <logging/LoggerRegistry.h>
 #include <sstream>
 #include <system/System.h>
@@ -71,7 +73,8 @@ int main (int argc, char** argv)
 			<< " personas" << Logger::endl;
 
 		while (batch > 0) {
-			int idxPuerta = rand () % puertas.size ();
+			assert (puertas.size () <= std::numeric_limits<int>::max ());
+			int idxPuerta = rand () % static_cast<int> (puertas.size ());
 			std::string numPuerta = puertas[idxPuerta].as<std::string> ();
 
 			logger << Level::INFO
