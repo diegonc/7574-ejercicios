@@ -73,7 +73,7 @@ int main (int argc, char** argv)
 			<< " personas" << Logger::endl;
 
 		while (batch > 0) {
-			assert (puertas.size () <= std::numeric_limits<int>::max ());
+			assert (puertas.size () <= static_cast<unsigned int> (std::numeric_limits<int>::max ()));
 			int idxPuerta = rand () % static_cast<int> (puertas.size ());
 			std::string numPuerta = puertas[idxPuerta].as<std::string> ();
 
