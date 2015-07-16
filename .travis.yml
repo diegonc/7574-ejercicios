@@ -13,5 +13,5 @@ before_script:
   - PROJ_ROOT=`pwd`
 
 script:
-  - cd $PROJ_ROOT/ejercicio1 && ./bootstrap.sh && ./configure && make -j4
+  - cd $PROJ_ROOT/ejercicio1 && ./bootstrap.sh && ./configure && make -j4 V=1
   - cd $PROJ_ROOT/ejercicio2 && ./bootstrap.sh && ./configure && make -j4
