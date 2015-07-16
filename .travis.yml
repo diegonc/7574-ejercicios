@@ -11,6 +11,8 @@ language: c
 
 addons:
   apt:
+    sources:
+      - boost-latest
     packages:
       - libboost1.55-dev
       - cmake
