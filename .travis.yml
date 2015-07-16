@@ -6,19 +6,19 @@ addons:
       - boost-latest
     packages:
       - libboost1.55-dev
-      - cmake
+      - libyaml-cpp-dev
 
-install:
-  # Install yaml-cpp 0.5.1
-  - CDIR=`pwd`
-  - wget https://github.com/jbeder/yaml-cpp/archive/release-0.5.1.tar.gz -Oyaml-cpp-0.5.1.tar.gz
-  - tar xvzf yaml-cpp-0.5.1.tar.gz
-  - mkdir yaml-cpp-release-0.5.1/build && cd yaml-cpp-release-0.5.1/build
-  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/libs/yaml-cpp ..
-  - make && make install
-  - ls -R $HOME/libs/yaml-cpp
-  - export PKG_CONFIG_PATH=$HOME/libs/yaml-cpp/lib/pkgconfig:$HOME/libs/yaml-cpp/share/pkgconfig
-  - cd $CDIR
+# install:
+#   # Install yaml-cpp 0.5.1
+#   - CDIR=`pwd`
+#   - wget https://github.com/jbeder/yaml-cpp/archive/release-0.5.1.tar.gz -Oyaml-cpp-0.5.1.tar.gz
+#   - tar xvzf yaml-cpp-0.5.1.tar.gz
+#   - mkdir yaml-cpp-release-0.5.1/build && cd yaml-cpp-release-0.5.1/build
+#   - cmake -DCMAKE_INSTALL_PREFIX=$HOME/libs/yaml-cpp ..
+#   - make && make install
+#   - ls -R $HOME/libs/yaml-cpp
+#   - export PKG_CONFIG_PATH=$HOME/libs/yaml-cpp/lib/pkgconfig:$HOME/libs/yaml-cpp/share/pkgconfig
+#   - cd $CDIR
 
 before_script:
   - PROJ_ROOT=`pwd`
