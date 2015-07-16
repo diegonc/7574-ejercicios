@@ -16,7 +16,6 @@ install:
   - mkdir yaml-cpp-release-0.5.1/build && cd yaml-cpp-release-0.5.1/build
   - cmake -DCMAKE_INSTALL_PREFIX=$HOME/libs/yaml-cpp ..
   - make && make install
-  - ls -R $HOME/libs/yaml-cpp
   - export PKG_CONFIG_PATH=$HOME/libs/yaml-cpp/lib/pkgconfig:$HOME/libs/yaml-cpp/share/pkgconfig
   - cd $CDIR
 
@@ -25,4 +24,4 @@ before_script:
 
 script:
   - cd $PROJ_ROOT/ejercicio1 && ./bootstrap.sh && ./configure && make -j4
-  - cd $PROJ_ROOT/ejercicio2 && ./bootstrap.sh && ./configure && make -j4 V=1
+  - cd $PROJ_ROOT/ejercicio2 && ./bootstrap.sh && ./configure && make -j4
