@@ -1,14 +1,5 @@
 language: c
 
-# before_install:
-#   - sudo add-apt-repository -y
-#       'deb http://gb.archive.ubuntu.com/ubuntu/ trusty universe'
-#   - sudo apt-get update
-
-# install:
-#   - sudo apt-get install -y libyaml-cpp-dev=0.5.1-1
-#   - sudo apt-get install -y libboost1.55-dev
-
 addons:
   apt:
     sources:
@@ -34,4 +25,4 @@ before_script:
 
 script:
   - cd $PROJ_ROOT/ejercicio1 && ./bootstrap.sh && ./configure && make -j4
-  - cd $PROJ_ROOT/ejercicio2 && ./bootstrap.sh && ./configure && make -j4
+  - cd $PROJ_ROOT/ejercicio2 && ./bootstrap.sh && ./configure && make -j4 V=1
