@@ -67,7 +67,7 @@ bin_PROGRAMS = \
 
 persona_persona_SOURCES = $(personaSources) $(libSources)
 persona_persona_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/persona
-persona_persona_CXXFLAGS = $(AM_CXXFLAGS) -I$(srcdir)/persona
+persona_persona_CXXFLAGS = $(AM_CXXFLAGS) -I$(srcdir)/persona $(YAMLCPP_CFLAGS)
 persona_persona_LDADD = $(YAMLCPP_LIBS)
 
 puerta_puerta_SOURCES = $(puertaSources) $(libSources)
