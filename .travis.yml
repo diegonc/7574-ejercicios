@@ -18,6 +18,7 @@ addons:
       - cmake
 
 install:
+  # Install yaml-cpp 0.5.1
   - CDIR=`pwd`
   - wget https://github.com/jbeder/yaml-cpp/archive/release-0.5.1.tar.gz -Oyaml-cpp-0.5.1.tar.gz
   - tar xvzf yaml-cpp-0.5.1.tar.gz
@@ -26,7 +27,7 @@ install:
   - make && make install
   - ls -R $HOME/libs/yaml-cpp
   - export PKG_CONFIG_PATH=$HOME/libs/yaml-cpp/lib/pkgconfig:$HOME/libs/yaml-cpp/share/pkgconfig
-#- libyaml-cpp-dev=0.5.1-1
+  - cd $CDIR
 
 before_script:
   - PROJ_ROOT=`pwd`
